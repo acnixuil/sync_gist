@@ -13,21 +13,33 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download files from Gist
+        env:
+          GIST_URL_PUBLIC: ${{ secrets.GIST_URL_PUBLIC }}
+          GIST_URL_PRIVATE: ${{ secrets.GIST_URL_PRIVATE }}
+          GIST_URL_SMARTDNS: ${{ secrets.GIST_URL_SMARTDNS }}
+          GIST_URL_EXAMPLE: ${{ secrets.GIST_URL_EXAMPLE }}
         run: |
           curl -fsSL -o mihomo_public_lite.yaml "$GIST_URL_PUBLIC"
           curl -fsSL -o mihomo_private.yaml "$GIST_URL_PRIVATE"
           curl -fsSL -o smartdns.yaml "$GIST_URL_SMARTDNS"
           curl -fsSL -o example.yaml "$GIST_URL_EXAMPLE"
 
-      - name: Configure Git
+      - name: Check for changes
+        id: diff
+        run: |
+          git add .
+          git diff --cached --quiet && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Set up Git config
+        if: steps.diff.outputs.changed == 'true'
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Commit & Push if changed
+        if: steps.diff.outputs.changed == 'true'
         run: |
-          git add .
-          git diff --cached --quiet || git commit -m "Sync from Gist"
+          git commit -m "Sync from Gist"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
