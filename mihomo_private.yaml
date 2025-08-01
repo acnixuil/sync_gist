@@ -1,0 +1,253 @@
+listeners:
+  - name: ss-home
+    type: shadowsocks
+    port: 52888
+    listen: 0.0.0.0
+    cipher: aes-256-gcm
+    password: 5uX6zWvPpzS!6KqgJknrW8ap7n@XR6@Sj@3%AcCEnFE$
+    udp: false
+
+# 这里是订阅更新和延迟测试相关的
+sub: &sub {type: http, interval: 3600, header: {User-Agent: ["clash-verge/v2.3.1", "mihomo/1.18.3"]}, health-check: {enable: true, url: 'https://www.gstatic.com/generate_204', interval: 300}, exclude-filter: "备用登录|备用面板|忘记登录|禁止工作室使用|禁止任何商业使用|无Ins购买渠道|无QQ购买渠道|无微信购买渠道|纯IPV6接入|距离下次重置|剩余流量|到期|过期|官网|永久|generation|家庭|家宽|海外|6.0|频道"}
+# 策略组相关
+pr: &pr {type: select, proxies: [节点选择, 自动回退, 🇭🇰 香港手动, 🇯🇵 日本手动, 🇸🇬 狮城手动, 🇭🇰 香港自动, 🇺🇲 美国自动, 🇯🇵 日本自动, 🇸🇬 狮城自动, 其它地区, 低倍, 全部节点, DIRECT]}
+url-test: &url-test {type: url-test, url: 'https://www.gstatic.com/generate_204', interval: 300, include-all: true}
+load-balance: &load-balance {type: load-balance, url: 'https://www.gstatic.com/generate_204', interval: 300, include-all: true, lazy: true, strategy: consistent-hashing}
+fallback: &fallback {type: fallback, url: 'https://www.gstatic.com/generate_204', interval: 180}
+
+proxy-providers:
+  订阅1:
+    <<: *sub
+    url: "http://23.145.248.232:13389/api/v1/client/subscribe?token=4520e8fb86b83afb0d6ff9b51b587b60"
+    override:
+      additional-prefix: "[X]"
+ 
+  订阅2:
+    <<: *sub
+    url: "https://url.409648.xyz/data/payload/getlink?token=6443a50c036a92c047b385715790885f"
+    override:
+      additional-prefix: "[rec]"
+ 
+mixed-port: 7890
+ipv6: true
+log-level: warning
+allow-lan: true
+unified-delay: true
+tcp-concurrent: true
+external-controller: 0.0.0.0:9090
+secret: 'qwer1234'
+external-ui: ui
+external-ui-url: "https://gh.eynix.tech/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+
+find-process-mode: strict
+keep-alive-interval: 600
+keep-alive-idle: 15
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+sniffer:
+  enable: true
+
+  parse-pure-ip: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  skip-domain:
+    - "Mijia Cloud"
+    - "+.push.apple.com"
+
+tun:
+  enable: true
+  stack: system
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+
+dns:
+  enable: true
+  cache-algorithm: arc
+  ipv6: true
+  enhanced-mode: redir-host
+  listen: 0.0.0.0:1053
+  respect-rules: true
+  proxy-server-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver:
+    # - "https://223.5.5.5/dns-query"
+    # - "https://223.6.6.6/dns-query"
+    - "https://208.67.220.222/dns-query"
+    - "https://9.9.9.9/dns-query
+    # - 127.0.0.1:5335
+  nameserver-policy:
+    "*": 127.0.0.1#lo
+    "+.lan": 127.0.0.1#lo
+    "+.local": 127.0.0.1#lo
+    "+.arpa": 127.0.0.1#lo
+    '+.ts.net': 127.0.0.1#tailscale0
+    "rule-set:awavenue-ads": rcode://success
+    "rule-set:cn_domain,apple":
+      - system
+      - 223.5.5.5
+
+proxies:
+  - name: "🇺🇲 美洛"
+    type: vless
+    server: qq.dorohouse.dpdns.org
+    port: 443
+    udp: true
+    uuid: "625a08bb-d372-4f7c-a2d4-6a50ca3393ce"
+    flow: xtls-rprx-vision
+    packet-encoding: xudp
+    tls: true
+    servername: "ntp4.lonet.org"
+    client-fingerprint: chrome
+    reality-opts:
+      public-key: "_RORnWa9MjzGmBFGk3tyc9oZ71pXgLM-nHN14kgyGBg"
+      short-id: "ab1a14172b90d56c"
+    skip-cert-verify: false
+
+  - name: "🇺🇲 美洛 HYSTERIA2"
+    type: hysteria2
+    server: qq.dorohouse.dpdns.org
+    port: 52021
+    password: "c36d52aa-12b0-420c-a409-02f0410f6ac4"
+    up: "100 Mbps"
+    down: "800 Mbps"
+    client-fingerprint: chrome
+    alpn:
+      - h3
+    skip-cert-verify: false
+
+proxy-groups:
+  - {name: 节点选择, type: select, proxies: [🇸🇬 狮城手动, 🇭🇰 香港自动, 🇭🇰 香港手动, 🇯🇵 日本手动, 🇺🇲 美国手动, 🇸🇬 狮城自动, 🇺🇲 美国自动, 🇯🇵 日本自动, 自动回退, 全部节点, 低倍, DIRECT]}
+  - {name: 自动回退, <<: *fallback, proxies: [🇸🇬 狮城手动, 🇭🇰 香港自动, 🇸🇬 狮城自动, 🇺🇲 美国手动]}
+  - {name: Telegram, type: select, proxies: [节点选择, 低倍, 🇺🇲 美国手动]}
+  - {name: Spotify, <<: *pr}
+  - {name: AI, <<: *pr}
+  # - {name: Speedtest, type: select, proxies: [DIRECT, 🇭🇰 香港自动, 🇸🇬 狮城自动, 🇯🇵 日本自动, 🇺🇲 美国自动]}
+  # - {name: Game, <<: *pr}
+  - {name: Apple, type: select, proxies: [DIRECT, 🇭🇰 香港自动, 🇸🇬 狮城自动, 🇯🇵 日本自动, 🇺🇲 美国自动, 🇺🇲 美国手动]}
+  - {name: Google, <<: *pr}
+  - {name: Pikpak, <<: *pr}
+  - {name: Tracker, <<: *pr}
+  - {name: Emby, type: select, proxies: [DIRECT], include-all: true, filter: "(?i)emby|港|hk|hongkong|hong kong|新|sg|singapore|美|us|unitedstates|united states|日|jp|japan"}
+  - {name: Final, <<: *pr}
+  
+  - {name: 🇭🇰 香港手动, type: select, include-all: true, filter: "(?i)香港|深港|沪港|呼港|HKT|HKBN|HGC|WTT|CMI|穗港|京港|港|hk|hongkong|hong kong"}
+  - {name: 🇯🇵 日本手动, type: select, include-all: true, filter: "(?i)日本|东京|大阪|埼玉|沪日|穗日|川日|中日|泉日|杭日|日|jp|japan"}
+  - {name: 🇸🇬 狮城手动, type: select, include-all: true, filter: "(?i)新加坡|狮城|沪新|京新|泉新|穗新|深新|杭新|新|sg|singapore"}
+  - {name: 🇺🇲 美国手动, type: select, include-all: true, filter: "(?i)美|us|unitedstates|united states", exclude-filter: "(?i)emby"}
+  - {name: 🇭🇰 香港自动, <<: *url-test, filter: "(?i)香港|深港|沪港|呼港|HKT|HKBN|HGC|WTT|CMI|穗港|京港|港|hk|hongkong|hong kong"}
+  - {name: 🇯🇵 日本自动, <<: *url-test, filter: "(?i)日本|东京|大阪|埼玉|沪日|穗日|川日|中日|泉日|杭日|日|jp|japan"}
+  - {name: 🇸🇬 狮城自动, <<: *url-test, filter: "(?i)新加坡|狮城|沪新|京新|泉新|穗新|深新|杭新|新|sg|singapore|狮城"}
+  - {name: 🇺🇲 美国自动, <<: *url-test, filter: "(?i)美|us|unitedstates|united states", exclude-filter: "(?i)emby"}
+  - {name: 低倍, <<: *url-test, filter: "(?i)\\b0\\.(?:[1-8]|9(?!\\d))(?:\\s*[xX倍]?)?\\b", exclude-filter: "(?i)emby"}
+  - {name: 其它地区, type: select , include-all: true, filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|香港|深港|沪港|呼港|HKT|HKBN|HGC|WTT|CMI|穗港|京港|港|hk|hongkong|台|tw|taiwan|日本|东京|大阪|埼玉|沪日|穗日|川日|中日|泉日|杭日|日|jp|japan|新加坡|狮城|沪新|京新|泉新|穗新|深新|杭新|新|sg|singapore|美|us|unitedstates)).*"}
+  - {name: 全部节点, type: select , include-all: true}
+  
+rules:
+  - DST-PORT,3478,DIRECT
+  - IP-CIDR,95.161.76.100/31,REJECT,no-resolve
+  - IP-CIDR,95.161.76.100/16, 节点选择
+  - RULE-SET,private_ip,DIRECT,no-resolve
+  - RULE-SET,awavenue-ads,REJECT
+  - RULE-SET,custom_reject,REJECT
+  - DOMAIN-SUFFIX,freetv.top,DIRECT
+  - DOMAIN,launcher-public-service-prod.ak.epicgames.com,DIRECT
+  - DOMAIN,launcher.store.epicgames.com,DIRECT
+  # - RULE-SET,custom_direct,DIRECT
+  - RULE-SET,apple,Apple
+  # - RULE-SET,category-games@cn,DIRECT
+  # - RULE-SET,category-games,Game
+  # - RULE-SET,speedtest,Speedtest
+  - RULE-SET,tg_domain,Telegram
+  - RULE-SET,spotify,Spotify
+  - RULE-SET,ai,AI
+  - RULE-SET,pikpak,Pikpak
+  - RULE-SET,custom_emby,Emby
+  - RULE-SET,tracker,Tracker
+  - RULE-SET,google_domain,Google
+  - RULE-SET,cn_domain,DIRECT
+  - RULE-SET,tg_ip,Telegram
+  - RULE-SET,google_ip,Google
+  - RULE-SET,cn_ip,DIRECT
+  - MATCH,Final
+  
+rule-anchor:
+  ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: yaml}
+  domain: &domain {type: http, interval: 86400, behavior: domain, format: yaml}
+  domaintxt: &domaintxt {type: http, interval: 86400, behavior: domain, format: text}
+  classical: &classical {type: http, interval: 86400, behavior: classical, format: yaml}
+  classicaltxt: &classicaltxt {type: http, interval: 86400, behavior: classical, format: text}
+  mrs: &mrs {type: http, interval: 86400, behavior: domain, format: mrs}
+  mrsip: &mrsip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
+  
+rule-providers:
+  custom_reject:
+    <<: *mrs
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/acnixuil/rules-dat/refs/heads/mrs/custom_reject.mrs"
+  custom_direct:
+    <<: *mrs
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/acnixuil/rules-dat/refs/heads/mrs/custom_direct.mrs"
+  custom_emby:
+    <<: *mrs
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/acnixuil/rules-dat/refs/heads/mrs/custom_emby.mrs"
+  awavenue-ads:
+    <<: *mrs
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/acnixuil/rules-dat/refs/heads/mrs/awavenue-ads.mrs"
+  private_ip:
+    <<: *mrsip
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"
+  # category-games@cn:
+  #   <<: *mrs
+  #   url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games@cn.mrs"
+  # category-games:
+  #   <<: *mrs
+  #   url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs"
+  apple:
+    <<: *mrs
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"
+  tg_ip:
+    <<: *mrsip
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"
+  tg_domain:
+    <<: *mrs
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"
+  spotify:
+    <<: *mrs
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"
+  ai:
+    <<: *mrs
+    url: "https://gh.eynix.tech/github.com/ForestL18/rules-dat/raw/mihomo/geo/domain/ai-domain.mrs"
+  pikpak:
+    <<: *mrs
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/pikpak.mrs"
+  tracker:
+    <<: *mrs
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tracker.mrs"
+  # speedtest:
+  #   <<: *mrs
+  #   url: "https://raw.ihtw.moe/raw.githubusercontent.com/JohnsonRan/CRules/mihomo/rules/speedtest.mrs"
+  google_domain:
+    <<: *mrs
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"
+  google_ip:
+    <<: *mrsip
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"
+  cn_domain:
+    <<: *mrs
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
+  cn_ip:
+    <<: *mrsip
+    url: "https://gh.eynix.tech/raw.githubusercontent.com/ForestL18/rules-dat/refs/heads/mihomo/asn/combined/China-ASN-combined.mrs"
