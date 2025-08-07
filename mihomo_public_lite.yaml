@@ -1,10 +1,22 @@
 # 这里是订阅更新和延迟测试相关的
-sub: &sub {type: http, interval: 3600, header: {User-Agent: ["clash-verge/v2.3.1", "mihomo/1.18.3"]}, health-check: {enable: true, url: 'https://www.gstatic.com/generate_204', interval: 300}, exclude-filter: "备用登录|备用面板|忘记登录|禁止工作室使用|禁止任何商业使用|无Ins购买渠道|无QQ购买渠道|无微信购买渠道|纯IPV6接入|距离下次重置|剩余流量|到期|过期|官网|永久|generation|家庭|家宽|海外|6.0"}
+sub:
+  &sub {
+    type: http,
+    interval: 3600,
+    health-check:
+      {
+        enable: true,
+        url: "https://www.gstatic.com/generate_204",
+        interval: 300,
+      },
+    exclude-filter: "备用登录|备用面板|忘记登录|禁止工作室使用|禁止任何商业使用|无Ins购买渠道|无QQ购买渠道|无微信购买渠道|纯IPV6接入|距离下次重置|剩余流量|到期|过期|官网|永久|generation|家庭|家宽|海外|6.0",
+  }
+  
 # 策略组相关
-pr: &pr {type: select, proxies: [节点选择, 自动回退, 🇭🇰 香港手动, 🇯🇵 日本手动, 🇸🇬 狮城手动, 🇭🇰 香港自动, 🇺🇲 美国自动, 🇯🇵 日本自动, 🇸🇬 狮城自动, 低倍, 全部节点, DIRECT]}
-url-test: &url-test {type: url-test, url: 'https://www.gstatic.com/generate_204', interval: 300, include-all-providers: true}
-load-balance: &load-balance {type: load-balance, url: 'https://www.gstatic.com/generate_204', interval: 300, include-all-providers: true, lazy: true, strategy: consistent-hashing}
-fallback: &fallback {type: fallback, url: 'https://www.gstatic.com/generate_204', interval: 180}
+pr: &pr {type: select, proxies: [节点选择, 🇭🇰 香港, 🇺🇲 美国, 🇯🇵 日本, 🇸🇬 新加坡, 🇨🇳 台湾, 其它地区, DIRECT]}
+url-test: &url-test {type: url-test, url: "https://www.gstatic.com/generate_204", interval: 180, include-all: true, }
+load-balance: &load-balance {type: load-balance, url: "https://www.gstatic.com/generate_204", interval: 300, include-all: true, lazy: true, strategy: consistent-hashing}
+fallback: &fallback {type: fallback, url: "https://www.gstatic.com/generate_204", interval: 180}
 
 proxy-providers:
   XSUS:
@@ -21,7 +33,7 @@ tcp-concurrent: true
 external-controller: 0.0.0.0:9090
 secret: '123456'
 external-ui: ui
-external-ui-url: "https://gh.eynix.tech/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+external-ui-url: "https://gh.eynix.tech/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
 find-process-mode: strict
 keep-alive-interval: 600
@@ -78,24 +90,19 @@ dns:
     "rule-set:awavenue-ads": rcode://success
 
 proxy-groups:
-  - {name: 节点选择, type: select, proxies: [🇸🇬 狮城自动, 🇭🇰 香港自动, 🇭🇰 香港手动, 🇯🇵 日本手动, 🇸🇬 狮城手动, 🇺🇲 美国自动, 🇯🇵 日本自动, 自动回退, 全部节点, 低倍, DIRECT]}
-  - {name: 自动回退, <<: *fallback, proxies: [🇸🇬 狮城手动, 🇭🇰 香港自动, 🇸🇬 狮城自动, 🇯🇵 日本自动, 🇺🇲 美国自动]}
+  - {name: 节点选择, type: select, proxies: [🇸🇬 新加坡, 🇭🇰 香港, 🇺🇲 美国, 🇯🇵 日本, 🇨🇳 台湾, 其它地区, DIRECT]}
   - {name: AI, <<: *pr}
   - {name: Spotify, <<: *pr}
-  - {name: Apple, type: select, proxies: [DIRECT, 🇭🇰 香港自动, 🇸🇬 狮城自动, 🇯🇵 日本自动, 🇺🇲 美国自动]}
+  - {name: Apple, type: select, proxies: [DIRECT, 🇭🇰 香港, 🇸🇬 新加坡, 🇯🇵 日本, 🇺🇲 美国, 🇹🇼 台湾]}
   - {name: Final, <<: *pr}
-  
-  - {name: 🇭🇰 香港手动, type: select, include-all-providers: true, filter: "(?i)香港|深港|沪港|呼港|HKT|HKBN|HGC|WTT|CMI|穗港|京港|港|hk|hongkong|hong kong"}
-  - {name: 🇯🇵 日本手动, type: select, include-all-providers: true, filter: "(?i)日本|东京|大阪|埼玉|沪日|穗日|川日|中日|泉日|杭日|日|jp|japan"}
-  - {name: 🇸🇬 狮城手动, type: select, include-all-providers: true, filter: "(?i)新加坡|狮城|沪新|京新|泉新|穗新|深新|杭新|新|sg|singapore"}
-  
-  - {name: 🇭🇰 香港自动, <<: *url-test, filter: "(?i)香港|深港|沪港|呼港|HKT|HKBN|HGC|WTT|CMI|穗港|京港|港|hk|hongkong|hong kong"}
-  - {name: 🇯🇵 日本自动, <<: *url-test, filter: "(?i)日本|东京|大阪|埼玉|沪日|穗日|川日|中日|泉日|杭日|日|jp|japan"}
-  - {name: 🇸🇬 狮城自动, <<: *url-test, filter: "(?i)新加坡|狮城|沪新|京新|泉新|穗新|深新|杭新|新|sg|singapore|狮城"}
-  - {name: 🇺🇲 美国自动, <<: *url-test, filter: "(?i)美|us|unitedstates|united states", exclude-filter: "(?i)emby"}
-  
-  - {name: 低倍, <<: *url-test, filter: "(?i)\\b0\\.(?:[1-8]|9(?!\\d))(?:\\s*[xX倍]?)?\\b", exclude-filter: "(?i)emby"}
-  - {name: 全部节点, type: select , include-all-providers: true}
+
+  - {name: 🇭🇰 香港, <<: *url-test, filter: "(?i)🇭🇰|港|hk|hongkong|hong kong"}
+  - {name: 🇯🇵 日本, <<: *url-test, filter: "(?i)🇯🇵|日|jp|japan"}
+  - {name: 🇸🇬 新加坡, <<: *url-test, filter: "(?i)🇸🇬|新|sg|singapore"}
+  - {name: 🇺🇲 美国, <<: *url-test, filter: "(?i)🇺🇲|🇺🇸|美|us|unitedstates|united states"}
+  - {name: 🇨🇳 台湾, <<: *url-test, filter: "(?i)🇹🇼|台|tw|taiwan"}
+
+  - {name: 其它地区, type: select , include-all: true, filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇲|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*"}
   
 rules:
   - DST-PORT,3478,DIRECT
