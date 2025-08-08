@@ -93,7 +93,7 @@ proxy-groups:
   - {name: 节点选择, type: select, proxies: [🇸🇬 新加坡, 🇭🇰 香港, 🇺🇲 美国, 🇯🇵 日本, 🇨🇳 台湾, 其它地区, DIRECT]}
   - {name: AI, <<: *pr}
   - {name: Spotify, <<: *pr}
-  - {name: Apple, type: select, proxies: [DIRECT, 🇭🇰 香港, 🇸🇬 新加坡, 🇯🇵 日本, 🇺🇲 美国, 🇹🇼 台湾]}
+  - {name: Apple, type: select, proxies: [DIRECT, 🇭🇰 香港, 🇸🇬 新加坡, 🇯🇵 日本, 🇺🇲 美国, 🇨🇳 台湾]}
   - {name: Final, <<: *pr}
 
   - {name: 🇭🇰 香港, <<: *url-test, filter: "(?i)🇭🇰|港|hk|hongkong|hong kong"}
