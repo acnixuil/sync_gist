@@ -18,12 +18,19 @@ url-test: &url-test {type: url-test, url: "https://www.gstatic.com/generate_204"
 load-balance: &load-balance {type: load-balance, url: "https://www.gstatic.com/generate_204", interval: 300, include-all: true, lazy: true, strategy: consistent-hashing}
 fallback: &fallback {type: fallback, url: "https://www.gstatic.com/generate_204", interval: 180}
 
+# 订阅链接
 proxy-providers:
   XSUS:
     <<: *sub
     url: "http://23.145.248.232:13389/api/v1/client/subscribe?token=520bf01bb1e9577812f8304a3ff68cf3"
     override:
       additional-prefix: "[X]" 
+
+  cc:
+    <<: *sub
+    url: "http://74.48.4.144:48212/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
+    override:
+      additional-prefix: "[cc]" 
 
 mixed-port: 7890
 ipv6: true
