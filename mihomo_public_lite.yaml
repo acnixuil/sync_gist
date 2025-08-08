@@ -33,7 +33,7 @@ tcp-concurrent: true
 external-controller: 0.0.0.0:9090
 secret: '123456'
 external-ui: ui
-external-ui-url: "https://gh.eynix.tech/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+external-ui-url: "https://gh.ec2.dpdns.org/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
 find-process-mode: strict
 keep-alive-interval: 600
@@ -124,22 +124,22 @@ rule-anchor:
 rule-providers:
   awavenue-ads:
     <<: *mrs
-    url: "https://gh.eynix.tech/raw.githubusercontent.com/acnixuil/rules-dat/refs/heads/mrs/awavenue-ads.mrs"
+    url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/acnixuil/rules-dat/refs/heads/mrs/awavenue-ads.mrs"
   private_ip:
     <<: *mrsip
-    url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"
+    url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"
   apple:
     <<: *mrs
-    url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"
+    url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"
   spotify:
     <<: *mrs
-    url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"
+    url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"
   ai:
     <<: *mrs
-    url: "https://gh.eynix.tech/github.com/ForestL18/rules-dat/raw/mihomo/geo/domain/ai-domain.mrs"
+    url: "https://gh.ec2.dpdns.org/github.com/ForestL18/rules-dat/raw/mihomo/geo/domain/ai-domain.mrs"
   cn_domain:
     <<: *mrs
-    url: "https://gh.eynix.tech/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
+    url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
   cn_ip:
     <<: *mrsip
-    url: "https://gh.eynix.tech/raw.githubusercontent.com/ForestL18/rules-dat/refs/heads/mihomo/asn/combined/China-ASN-combined.mrs"
+    url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/ForestL18/rules-dat/refs/heads/mihomo/asn/combined/China-ASN-combined.mrs"
