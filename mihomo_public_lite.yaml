@@ -142,8 +142,8 @@ rule-providers:
     <<: *mrs
     url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"
   ai:
-    <<: *mrs
-    url: "https://gh.ec2.dpdns.org/github.com/ForestL18/rules-dat/raw/mihomo/geo/domain/ai-domain.mrs"
+    <<: *classicaltxt
+    url: "https://ruleset.skk.moe/Clash/non_ip/ai.txt"
   cn_domain:
     <<: *mrs
     url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"

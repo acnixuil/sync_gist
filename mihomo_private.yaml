@@ -215,17 +215,14 @@ rule-providers:
     <<: *mrs
     url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"
   ai:
-    <<: *mrs
-    url: "https://gh.ec2.dpdns.org/github.com/ForestL18/rules-dat/raw/mihomo/geo/domain/ai-domain.mrs"
+    <<: *classicaltxt
+    url: "https://ruleset.skk.moe/Clash/non_ip/ai.txt"
   pikpak:
     <<: *mrs
     url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/pikpak.mrs"
   tracker:
     <<: *mrs
     url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tracker.mrs"
-  # speedtest:
-  #   <<: *mrs
-  #   url: "https://raw.ihtw.moe/raw.githubusercontent.com/JohnsonRan/CRules/mihomo/rules/speedtest.mrs"
   google_domain:
     <<: *mrs
     url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"

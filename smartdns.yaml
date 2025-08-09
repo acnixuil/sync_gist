@@ -124,8 +124,7 @@ proxy-groups:
   - {name: Telegram, type: select, proxies: [节点选择, 低倍, 🇺🇲 美国手动]}
   - {name: Spotify, <<: *pr}
   - {name: AI, <<: *pr}
-  # - {name: Speedtest, type: select, proxies: [DIRECT, 🇭🇰 香港自动, 🇸🇬 狮城自动, 🇯🇵 日本自动, 🇺🇲 美国自动]}
-  # - {name: Game, <<: *pr}
+  - {name: Game, <<: *pr}
   - {name: Apple, type: select, proxies: [DIRECT, 🇭🇰 香港自动, 🇸🇬 狮城自动, 🇯🇵 日本自动, 🇺🇲 美国自动, 🇺🇲 美国手动]}
   - {name: Google, <<: *pr}
   - {name: Pikpak, <<: *pr}
@@ -155,9 +154,8 @@ rules:
   - RULE-SET,custom_reject,REJECT
   - RULE-SET,custom_direct,DIRECT
   - RULE-SET,apple,Apple
-  # - RULE-SET,category-games@cn,DIRECT
-  # - RULE-SET,category-games,Game
-  # - RULE-SET,speedtest,Speedtest
+  - RULE-SET,category-games@cn,DIRECT
+  - RULE-SET,category-games,Game
   - RULE-SET,tg_domain,Telegram
   - RULE-SET,spotify,Spotify
   - RULE-SET,ai,AI
@@ -196,12 +194,12 @@ rule-providers:
   private_ip:
     <<: *mrsip
     url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"
-  # category-games@cn:
-  #   <<: *mrs
-  #   url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games@cn.mrs"
-  # category-games:
-  #   <<: *mrs
-  #   url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs"
+  category-games@cn:
+    <<: *mrs
+    url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games@cn.mrs"
+  category-games:
+    <<: *mrs
+    url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs"
   apple:
     <<: *mrs
     url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"
@@ -215,17 +213,14 @@ rule-providers:
     <<: *mrs
     url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"
   ai:
-    <<: *mrs
-    url: "https://gh.ec2.dpdns.org/github.com/ForestL18/rules-dat/raw/mihomo/geo/domain/ai-domain.mrs"
+    <<: *classicaltxt
+    url: "https://ruleset.skk.moe/Clash/non_ip/ai.txt"
   pikpak:
     <<: *mrs
     url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/pikpak.mrs"
   tracker:
     <<: *mrs
     url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tracker.mrs"
-  # speedtest:
-  #   <<: *mrs
-  #   url: "https://raw.ihtw.moe/raw.githubusercontent.com/JohnsonRan/CRules/mihomo/rules/speedtest.mrs"
   google_domain:
     <<: *mrs
     url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"
