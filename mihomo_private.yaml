@@ -45,7 +45,13 @@ proxy-providers:
     url: "http://74.48.4.144:48212/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
     override:
       additional-prefix: "[cc]" 
- 
+
+  订阅4:
+    <<: *sub
+    url: "http://45.196.222.130:48212/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
+    override:
+      additional-prefix: "[ak]" 
+      
 mixed-port: 7890
 ipv6: true
 log-level: warning
