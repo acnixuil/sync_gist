@@ -150,7 +150,7 @@ proxy-groups:
   - {name: 🇺🇲 美国自动, <<: *url-test, filter: "(?i)🇺🇲|🇺🇸|美|us|unitedstates|united states"}
   - {name: 🇨🇳 台湾自动, <<: *url-test, filter: "(?i)🇹🇼|台|tw|taiwan"}
   
-  - {name: 低倍, <<: *load-balance, filter: "(?i)\\b0\\.(?:[1-8]|9(?!\\d))(?:\\s*[xX倍]?)?\\b|🇺🇲", use: [订阅2, 订阅3], exclude-filter: "(?i)emby"}
+  - {name: 低倍, <<: *load-balance, filter: "(?i)\\b0\\.(?:[1-8]|9(?!\\d))(?:\\s*[xX倍]?)?\\b|🇺🇲|tls", use: [订阅2, 订阅3, 订阅4], exclude-filter: "(?i)emby"}
   - {name: 其它地区, type: select , include-all: true, filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇲|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*"}
 
 rules:
