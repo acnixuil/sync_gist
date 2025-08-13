@@ -133,6 +133,7 @@ proxy-groups:
   # - {name: Speedtest, type: select, proxies: [DIRECT, 🇭🇰 香港自动, 🇸🇬 狮城自动, 🇯🇵 日本自动, 🇺🇲 美国自动]}
   # - {name: Game, <<: *pr}
   - {name: Apple, type: select, proxies: [DIRECT, 🇭🇰 香港自动, 🇸🇬 狮城自动, 🇯🇵 日本自动, 🇺🇲 美国自动, 🇺🇲 美国手动]}
+  - {name: Speedtest, type: select, include-all: true}
   - {name: Google, <<: *pr}
   - {name: Pikpak, <<: *pr}
   - {name: Tracker, <<: *pr}
@@ -151,7 +152,7 @@ proxy-groups:
   - {name: 🇨🇳 台湾自动, <<: *url-test, filter: "(?i)🇹🇼|台|tw|taiwan"}
   
   - {name: 低倍, <<: *load-balance, filter: "(?i)\\b0\\.(?:[1-8]|9(?!\\d))(?:\\s*[xX倍]?)?\\b|🇺🇲|tls", use: [订阅2, 订阅3, 订阅4], exclude-filter: "(?i)emby"}
-  - {name: 其它地区, type: select , include-all: true, filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇲|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*"}
+  - {name: 其它地区, type: select, include-all: true, filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇲|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*"}
 
 rules:
   - DST-PORT,3478,DIRECT
@@ -163,7 +164,7 @@ rules:
   - RULE-SET,apple,Apple
   # - RULE-SET,category-games@cn,DIRECT
   # - RULE-SET,category-games,Game
-  # - RULE-SET,speedtest,Speedtest
+  - RULE-SET,speedtest,Speedtest
   - RULE-SET,tg_domain,Telegram
   - RULE-SET,spotify,Spotify
   - RULE-SET,ai,AI
@@ -208,6 +209,9 @@ rule-providers:
   # category-games:
   #   <<: *mrs
   #   url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs"
+  speedtest:
+    <<: *mrs
+    url: "https://git.ihtw.moe/JohnsonRan/CRules/raw/mihomo/rules/speedtest.mrs"
   apple:
     <<: *mrs
     url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"
