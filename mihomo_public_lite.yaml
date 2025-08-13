@@ -46,7 +46,7 @@ tcp-concurrent: true
 external-controller: 0.0.0.0:9090
 secret: '123456'
 external-ui: ui
-external-ui-url: "https://gh.ec2.dpdns.org/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+external-ui-url: "https://gh.ec2.dpdns.org/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages-cdn-fonts.zip"
 
 find-process-mode: strict
 keep-alive-interval: 600

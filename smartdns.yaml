@@ -55,7 +55,7 @@ tcp-concurrent: true
 external-controller: 0.0.0.0:9090
 secret: 'qwer1234'
 external-ui: ui
-external-ui-url: "https://gh.ec2.dpdns.org/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+external-ui-url: "https://gh.ec2.dpdns.org/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages-cdn-fonts.zip"
 
 find-process-mode: strict
 keep-alive-interval: 600
@@ -93,7 +93,7 @@ tun:
 
 dns:
   enable: true
-  cache-algorithm: arc
+
   ipv6: true
   enhanced-mode: redir-host
   listen: 0.0.0.0:1053
@@ -102,21 +102,7 @@ dns:
     - 223.5.5.5
     - 119.29.29.29
   nameserver:
-    # - "https://223.5.5.5/dns-query"
-    # - "https://223.6.6.6/dns-query"
-    # - "https://208.67.220.222/dns-query"
-    # - "https://9.9.9.9/dns-query"
     - 127.0.0.1:5335
-  nameserver-policy:
-    "*": 127.0.0.1#lo
-    "+.lan": 127.0.0.1#lo
-    "+.local": 127.0.0.1#lo
-    "+.arpa": 127.0.0.1#lo
-    '+.ts.net': 127.0.0.1#tailscale0
-    "rule-set:awavenue-ads": rcode://success
-    # "rule-set:cn_domain,apple":
-    #   - system
-    #   - 223.5.5.5
 
 proxy-groups:
   - {name: 节点选择, type: select, proxies: [🇸🇬 狮城手动, 🇭🇰 香港手动, 🇺🇲 美国手动, 🇯🇵 日本手动, 🇸🇬 狮城自动, 🇭🇰 香港自动, 🇺🇲 美国自动, 🇯🇵 日本自动, 🇨🇳 台湾自动, 自动回退, 其它地区, 低倍, DIRECT]}
@@ -150,7 +136,7 @@ rules:
   - DST-PORT,3478,DIRECT
   - IP-CIDR,95.161.76.100/31,REJECT,no-resolve
   - RULE-SET,private_ip,DIRECT,no-resolve
-  - RULE-SET,awavenue-ads,REJECT
+
   - RULE-SET,custom_reject,REJECT
   - RULE-SET,custom_direct,DIRECT
   - RULE-SET,apple,Apple
