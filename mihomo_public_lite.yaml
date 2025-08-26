@@ -37,6 +37,20 @@ proxy-providers:
     url: "http://45.196.222.130:48212/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
     override:
       additional-prefix: "[ak]" 
+ 
+  de:
+    <<: *sub
+    url: "http://94.103.172.137:48212/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
+    override:
+      additional-prefix: "[de]"      
+      
+proxies:
+  - {name: "[lxc]🇭🇰 香港 xtls-reality", type: vless, server: 38.71.126.2, port: 52000, uuid: cf170766-5045-4dab-bd9c-291c27a7862a, network: tcp, udp: true, tls: true, servername: addons.mozilla.org, client-fingerprint: chrome, reality-opts: {public-key: RzkPoWfd16K70syNCguRt7qA8k01J1LTgC867Yq96Vc, short-id: ""}, smux: { enabled: true, protocol: 'h2mux', padding: true, max-connections: '8', min-streams: '16', statistic: true, only-tcp: false }, brutal-opts: { enabled: false, up: '1000 Mbps', down: '1000 Mbps' } }
+  - {name: "[lxc]🇭🇰 香港 hysteria2", type: hysteria2, server: 38.71.126.2, port: 52001, up: "200 Mbps", down: "1000 Mbps", password: cf170766-5045-4dab-bd9c-291c27a7862a, skip-cert-verify: true}
+  - {name: "[lxc]🇭🇰 香港 anytls", type: anytls, server: 38.71.126.2, port: 52002, password: cf170766-5045-4dab-bd9c-291c27a7862a, client-fingerprint: chrome, udp: true, idle-session-check-interval: 30, idle-session-timeout: 30, skip-cert-verify: true }
+  - {name: "🇯🇵 日本 xtls-reality", type: vless, server: 47.245.61.54, port: 30000, uuid: cf170766-5045-4dab-bd9c-291c27a7862a, network: tcp, udp: true, tls: true, servername: addons.mozilla.org, client-fingerprint: chrome, reality-opts: {public-key: 4XnerUFi0BgpMG2fM1JZcS0m7spXPTL6mcAF0UH6ayg, short-id: ""}, smux: { enabled: true, protocol: 'h2mux', padding: true, max-connections: '8', min-streams: '16', statistic: true, only-tcp: false }, brutal-opts: { enabled: false, up: '1000 Mbps', down: '1000 Mbps' } }
+  - {name: "🇯🇵 日本 hysteria2", type: hysteria2, server: 47.245.61.54, port: 30001, up: "200 Mbps", down: "1000 Mbps", password: cf170766-5045-4dab-bd9c-291c27a7862a, skip-cert-verify: true}
+  - {name: "🇯🇵 日本 anytls", type: anytls, server: 47.245.61.54, port: 30002, password: cf170766-5045-4dab-bd9c-291c27a7862a, client-fingerprint: chrome, udp: true, idle-session-check-interval: 30, idle-session-timeout: 30, skip-cert-verify: true }  
       
 mixed-port: 7890
 ipv6: true
@@ -103,7 +117,8 @@ dns:
     "rule-set:awavenue-ads": rcode://success
 
 proxy-groups:
-  - {name: 节点选择, type: select, proxies: [🇸🇬 新加坡, 🇭🇰 香港, 🇺🇲 美国, 🇯🇵 日本, 🇨🇳 台湾, 其它地区, DIRECT]}
+  - {name: 节点选择, type: select, proxies: [故障转移, 🇸🇬 新加坡, 🇭🇰 香港, 🇺🇲 美国, 🇯🇵 日本, 🇨🇳 台湾, 其它地区, DIRECT]}
+  - {name: 故障转移, type: fallback, include-all: true, filter: "(?i)🇭🇰|🇺🇲|🇺🇸|🇸🇬|🇯🇵"}
   - {name: AI, <<: *pr}
   - {name: Spotify, <<: *pr}
   - {name: Apple, type: select, proxies: [DIRECT, 🇭🇰 香港, 🇸🇬 新加坡, 🇯🇵 日本, 🇺🇲 美国, 🇨🇳 台湾]}

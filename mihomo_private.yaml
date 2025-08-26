@@ -28,30 +28,48 @@ load-balance: &load-balance {type: load-balance, url: "https://www.gstatic.com/g
 fallback: &fallback {type: fallback, url: "https://www.gstatic.com/generate_204", interval: 180}
 
 proxy-providers:
-  订阅1:
+  X:
     <<: *sub
-    url: "http://23.145.248.232:13389/api/v1/client/subscribe?token=4520e8fb86b83afb0d6ff9b51b587b60"
+    # url: "http://23.145.248.232:13389/api/v1/client/subscribe?token=4520e8fb86b83afb0d6ff9b51b587b60"
     override:
       additional-prefix: "[X]"
  
-  订阅2:
+  rec:
     <<: *sub
     url: "https://url.409648.xyz/data/payload/getlink?token=6443a50c036a92c047b385715790885f"
     override:
       additional-prefix: "[rec]"
       
-  订阅3:
+  cc:
     <<: *sub
     url: "https://json.dorohouse.dpdns.org/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
     override:
       additional-prefix: "[cc]" 
 
-  订阅4:
+  ak:
     <<: *sub
-    url: "http://45.196.222.130:48212/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
+    # url: "http://45.196.222.130:48212/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
+    url: "https://o2.ec2.dpdns.org/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
     override:
       additional-prefix: "[ak]" 
-      
+ 
+  de:
+    <<: *sub
+    url: "http://94.103.172.137:48212/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
+    override:
+      additional-prefix: "[de]"
+ 
+proxies:
+  # - {name: "🇩🇪 德国 anytls", type: anytls, server: 94.103.172.137, port: 32801, password: cf170766-5045-4dab-bd9c-291c27a7862a, client-fingerprint: chrome, udp: true, idle-session-check-interval: 30, idle-session-timeout: 30, skip-cert-verify: true }
+  - {name: "🇺🇲 中转美国 anytls", type: anytls, server: 45.196.222.130, port: 52007, password: cf170766-5045-4dab-bd9c-291c27a7862a, client-fingerprint: chrome, udp: true, idle-session-check-interval: 30, idle-session-timeout: 30, skip-cert-verify: true }
+  - {name: "🇩🇪 中转德国 anytls", type: anytls, server: 45.196.222.130, port: 32801, password: cf170766-5045-4dab-bd9c-291c27a7862a, client-fingerprint: chrome, udp: true, idle-session-check-interval: 30, idle-session-timeout: 30, skip-cert-verify: true }
+  - {name: "[lxc]🇭🇰 香港 xtls-reality", type: vless, server: 38.71.126.2, port: 52000, uuid: cf170766-5045-4dab-bd9c-291c27a7862a, network: tcp, udp: true, tls: true, servername: addons.mozilla.org, client-fingerprint: chrome, reality-opts: {public-key: RzkPoWfd16K70syNCguRt7qA8k01J1LTgC867Yq96Vc, short-id: ""}, smux: { enabled: true, protocol: 'h2mux', padding: true, max-connections: '8', min-streams: '16', statistic: true, only-tcp: false }, brutal-opts: { enabled: false, up: '1000 Mbps', down: '1000 Mbps' } }
+  - {name: "[lxc]🇭🇰 香港 hysteria2", type: hysteria2, server: 38.71.126.2, port: 52001, up: "200 Mbps", down: "1000 Mbps", password: cf170766-5045-4dab-bd9c-291c27a7862a, skip-cert-verify: true}
+  - {name: "[lxc]🇭🇰 香港 anytls", type: anytls, server: 38.71.126.2, port: 52002, password: cf170766-5045-4dab-bd9c-291c27a7862a, client-fingerprint: chrome, udp: true, idle-session-check-interval: 30, idle-session-timeout: 30, skip-cert-verify: true }
+  - {name: "🇯🇵 日本 xtls-reality", type: vless, server: 47.245.61.54, port: 30000, uuid: cf170766-5045-4dab-bd9c-291c27a7862a, network: tcp, udp: true, tls: true, servername: addons.mozilla.org, client-fingerprint: chrome, reality-opts: {public-key: 4XnerUFi0BgpMG2fM1JZcS0m7spXPTL6mcAF0UH6ayg, short-id: ""}, smux: { enabled: true, protocol: 'h2mux', padding: true, max-connections: '8', min-streams: '16', statistic: true, only-tcp: false }, brutal-opts: { enabled: false, up: '1000 Mbps', down: '1000 Mbps' } }
+  - {name: "🇯🇵 日本 hysteria2", type: hysteria2, server: 47.245.61.54, port: 30001, up: "200 Mbps", down: "1000 Mbps", password: cf170766-5045-4dab-bd9c-291c27a7862a, skip-cert-verify: true}
+  - {name: "🇯🇵 日本 anytls", type: anytls, server: 47.245.61.54, port: 30002, password: cf170766-5045-4dab-bd9c-291c27a7862a, client-fingerprint: chrome, udp: true, idle-session-check-interval: 30, idle-session-timeout: 30, skip-cert-verify: true }  
+       
 mixed-port: 7890
 ipv6: true
 log-level: warning
@@ -120,12 +138,13 @@ dns:
     '+.ts.net': 127.0.0.1#tailscale0
     "rule-set:awavenue-ads": rcode://success
     "rule-set:cn_domain,apple":
-      - quic://223.5.5.5
-      - quic://223.6.6.6
+      - system
+      - 223.5.5.5
 
 proxy-groups:
-  - {name: 节点选择, type: select, proxies: [🇸🇬 狮城手动, 🇭🇰 香港手动, 🇺🇲 美国手动, 🇯🇵 日本手动, 🇸🇬 狮城自动, 🇭🇰 香港自动, 🇺🇲 美国自动, 🇯🇵 日本自动, 🇨🇳 台湾自动, 其它地区, 低倍, DIRECT]}
-  - {name: Telegram, type: select, proxies: [节点选择, 低倍, 🇭🇰 香港手动, 🇺🇲 美国手动]}
+  - {name: 节点选择, type: select, proxies: [🇸🇬 狮城手动, 🇭🇰 香港手动, 🇺🇲 美国手动, 🇯🇵 日本手动, 🇸🇬 狮城自动, 🇭🇰 香港自动, 🇺🇲 美国自动, 🇯🇵 日本自动, 🇨🇳 台湾自动, 其它地区, 低倍, 故障转移, DIRECT]}
+  - {name: 故障转移, type: fallback, include-all: true, filter: "(?i)🇭🇰|🇺🇲|🇺🇸|🇸🇬|🇯🇵"}
+  - {name: Telegram, type: select, <<: *pr}
   - {name: Spotify, <<: *pr}
   - {name: AI, <<: *pr}
   # - {name: Game, <<: *pr}
@@ -148,7 +167,7 @@ proxy-groups:
   - {name: 🇺🇲 美国自动, <<: *url-test, filter: "(?i)🇺🇲|🇺🇸|美|us|unitedstates|united states"}
   - {name: 🇨🇳 台湾自动, <<: *url-test, filter: "(?i)🇹🇼|台|tw|taiwan"}
   
-  - {name: 低倍, <<: *load-balance, filter: "(?i)\\b0\\.(?:[1-8]|9(?!\\d))(?:\\s*[xX倍]?)?\\b|🇺🇲|tls", use: [订阅2, 订阅3, 订阅4], exclude-filter: "(?i)emby"}
+  - {name: 低倍, <<: *load-balance, filter: "(?i)\\b0\\.(?:[1-8]|9(?!\\d))(?:\\s*[xX倍]?)?\\b|🇺🇲|tls", use: [cc, ak], exclude-filter: "(?i)emby"}
   - {name: 其它地区, type: select, include-all: true, filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇲|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*"}
 
 rules:
