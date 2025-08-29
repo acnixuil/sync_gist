@@ -42,14 +42,13 @@ proxy-providers:
       
   cc:
     <<: *sub
-    url: "https://json.dorohouse.dpdns.org/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
+    url: "http://74.48.4.144:48212/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
     override:
       additional-prefix: "[cc]" 
 
   ak:
     <<: *sub
-    # url: "http://45.196.222.130:48212/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
-    url: "https://o2.ec2.dpdns.org/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
+    url: "http://45.196.222.130:48212/cf170766-5045-4dab-bd9c-291c27a7862a/proxies"
     override:
       additional-prefix: "[ak]" 
  
