@@ -142,7 +142,7 @@ dns:
       - 223.5.5.5
 
 proxy-groups:
-  - {name: 节点选择, type: select, proxies: [🇸🇬 狮城手动, 🇭🇰 香港手动, 🇺🇲 美国手动, 🇯🇵 日本手动, 🇸🇬 狮城自动, 🇭🇰 香港自动, 🇺🇲 美国自动, 🇯🇵 日本自动, 🇨🇳 台湾自动, 其它地区, 低倍, 故障转移, DIRECT]}
+  - {name: 节点选择, type: select, proxies: [故障转移, 🇸🇬 狮城手动, 🇭🇰 香港手动, 🇺🇲 美国手动, 🇯🇵 日本手动, 🇸🇬 狮城自动, 🇭🇰 香港自动, 🇺🇲 美国自动, 🇯🇵 日本自动, 🇨🇳 台湾自动, 其它地区, 低倍, DIRECT]}
   - {name: 故障转移, type: fallback, include-all: true, filter: "(?i)🇭🇰|🇺🇲|🇺🇸|🇸🇬|🇯🇵"}
   - {name: Telegram, type: select, <<: *pr}
   - {name: Spotify, <<: *pr}
