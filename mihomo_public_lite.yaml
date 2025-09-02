@@ -60,7 +60,7 @@ tcp-concurrent: true
 external-controller: 0.0.0.0:9090
 secret: '123456'
 external-ui: ui
-external-ui-url: "https://gh.ec2.dpdns.org/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages-cdn-fonts.zip"
+external-ui-url: "https://gp.luv4doro.qzz.io/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages-cdn-fonts.zip"
 
 find-process-mode: strict
 keep-alive-interval: 600
@@ -118,7 +118,7 @@ dns:
 
 proxy-groups:
   - {name: 节点选择, type: select, proxies: [故障转移, 🇸🇬 新加坡, 🇭🇰 香港, 🇺🇲 美国, 🇯🇵 日本, 🇨🇳 台湾, 其它地区, DIRECT]}
-  - {name: 故障转移, type: fallback, include-all: true, filter: "(?i)🇭🇰|🇺🇲|🇺🇸|🇸🇬|🇯🇵"}
+  - {name: 故障转移, type: fallback, proxies: [🇸🇬 新加坡, 🇭🇰 香港, 🇺🇲 美国, 🇯🇵 日本, 🇨🇳 台湾, 其它地区, DIRECT]}
   - {name: AI, <<: *pr}
   - {name: Spotify, <<: *pr}
   - {name: Apple, type: select, proxies: [DIRECT, 🇭🇰 香港, 🇸🇬 新加坡, 🇯🇵 日本, 🇺🇲 美国, 🇨🇳 台湾]}
@@ -157,22 +157,22 @@ rule-anchor:
 rule-providers:
   awavenue-ads:
     <<: *mrs
-    url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/acnixuil/rules-dat/refs/heads/mrs/awavenue-ads.mrs"
+    url: "https://gp.luv4doro.qzz.io/raw.githubusercontent.com/acnixuil/rules-dat/refs/heads/mrs/awavenue-ads.mrs"
   private_ip:
     <<: *mrsip
-    url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"
+    url: "https://gp.luv4doro.qzz.io/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"
   apple:
     <<: *mrs
-    url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"
+    url: "https://gp.luv4doro.qzz.io/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"
   spotify:
     <<: *mrs
-    url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"
+    url: "https://gp.luv4doro.qzz.io/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"
   ai:
     <<: *classicaltxt
     url: "https://ruleset.skk.moe/Clash/non_ip/ai.txt"
   cn_domain:
     <<: *mrs
-    url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
+    url: "https://gp.luv4doro.qzz.io/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
   cn_ip:
     <<: *mrsip
-    url: "https://gh.ec2.dpdns.org/raw.githubusercontent.com/ForestL18/rules-dat/refs/heads/mihomo/asn/combined/China-ASN-combined.mrs"
+    url: "https://gp.luv4doro.qzz.io/raw.githubusercontent.com/ForestL18/rules-dat/refs/heads/mihomo/asn/combined/China-ASN-combined.mrs"
